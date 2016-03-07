@@ -1,0 +1,22 @@
+
+USAGE:
+
+$f90compiler = Name of your FORTRAN 90 compiler (ifort : Strongly Reccomended)
+
+INSTALLATION:
+
+./install.csh $f90compiler
+
+RUN:
+
+./surfNelcomp.csh -inp  [PDB_filename]
+./surfNelcomp.csh -inp  [PDB_filename] target [residue_number-residue_identity]
+./surfNelcomp.csh -inp  2HAQ.pdb
+./surfNelcomp.csh -inp  2HAQ.pdb target 151-PHE
+./surfNelcomp.csh -help (for help)
+
+./refresh.csh (To remove intermediate files for an interrupted or pre-terminated run of surfNelcomp.csh) 
+./clean.csh (to reset to the RAW / NASCENT form of the Package) 
+If Cleaned, then ensure to run install.csh prior to the next run of surfNelcomp.csh (see USAGE above)
+
+
