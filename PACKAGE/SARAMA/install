@@ -1,0 +1,82 @@
+#!/bin/bash
+
+upath=`echo ${0/install/}`
+path=`readlink -f $upath`
+
+echo $path
+
+fort90comp=$1
+
+if [ "$#" == "0" ]; then
+echo "Fortran90 compiler not specified"
+echo "Default fortran 90 compiler: ifort"
+fort90comp=ifort
+fi
+
+chmod +x $path/CompPlot
+
+#chs=`which $fortcomp`
+#echo $chs
+#if [[ $chs == *"$fortcomp"* ]]; then
+
+if hash $fortcomp &>/dev/null; then
+echo "$fortcomp FOUND"
+else
+echo "$fortcomp NOT FOUND to be installed"
+exit;
+fi
+
+rm -f $path/EXEC/*.exe
+
+$fort90comp $path/EXEC/dot1.f -o $path/EXEC/dot1.exe  &> /dev/null
+$fort90comp $path/EXEC/metcoord.f -o $path/EXEC/mcoord.exe  &> /dev/null
+$fort90comp $path/EXEC/metsph.f -o $path/EXEC/msph.exe  &> /dev/null
+$fort90comp $path/EXEC/conn4.f -o $path/EXEC/conn4.exe  &> /dev/null
+$fort90comp $path/EXEC/alter2m.f -o $path/EXEC/alter2m.exe  &> /dev/null
+$fort90comp $path/EXEC/satv-package.f -o $path/EXEC/satvp.exe  &> /dev/null
+$fort90comp $path/EXEC/dsl.f -o $path/EXEC/dsl.exe  &> /dev/null
+cp -f $path/EXEC/accall.pars .
+$fort90comp $path/EXEC/accall.f -o $path/EXEC/accall.exe  &> /dev/null
+$fort90comp $path/EXEC/buryasa.f -o $path/EXEC/buryasa.exe  &> /dev/null
+$fort90comp $path/EXEC/globuleN.f -o $path/EXEC/glbN.exe  &> /dev/null
+$fort90comp $path/EXEC/splitsurf.f -o $path/EXEC/spl.exe  &> /dev/null
+$fort90comp $path/EXEC/corrcoefPsplw.f -o $path/EXEC/ccpsw.exe  &> /dev/null
+$fort90comp $path/EXEC/burdist.f -o $path/EXEC/bdist.exe  &> /dev/null
+$fort90comp $path/EXEC/cmpi2.f -o $path/EXEC/cmp.exe  &> /dev/null
+$fort90comp $path/EXEC/transreal.f -o $path/EXEC/treal.exe  &> /dev/null
+$fort90comp $path/EXEC/tlod2.f -o $path/EXEC/tlod2.exe  &> /dev/null
+$fort90comp $path/EXEC/resGbur.f -o $path/EXEC/rGb.exe  &> /dev/null
+
+
+Nfort=`ls $path/EXEC/*.f | wc -l`
+Nexec=`ls $path/EXEC/*.exe | wc -l`
+
+
+chmod +x $path/EXEC/*.pl &> /dev/null
+dos2unix $path/EXEC/*.pl &> /dev/null
+dos2unix $path/LIBR/librf.list &> /dev/null
+chmod +x $path/EXEC/*.csh &> /dev/null
+cp refresh.csh $path/EXEC/ &> /dev/null
+
+	for i in `cat $path/LIBR/librf.list`
+	do
+	dos2unix $path/LIBR/$i &> /dev/null
+	cp $path/LIBR/$i . &> /dev/null
+	done
+
+echo $Nfort $Nexec
+if [ "$Nexec" == "$Nfort" ]; then
+echo "Compilation Successful"
+echo ' '
+echo '================================================================================='
+echo "Ready to run CompPlot"
+echo "general usage: './CompPlot inputpdbfile' (input pdb file as a commadline argument)"
+echo "input pdb file must have the extension '.pdb' (in LOWERCASE), e.g., 2haq.pdb, 1abc-765.pdb etc"
+echo '================================================================================='
+echo ' '
+
+tail -12 $path/USAGE
+fi
+
+
+
