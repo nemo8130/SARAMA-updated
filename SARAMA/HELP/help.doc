@@ -6,34 +6,34 @@ Also works for executables compiled by gfortran, f95 etc. (ALTHOUGH NOT RECCOMEN
 
 INSTALLATION:
 
-chmod +x install.csh
+chmod +x install
 
-./install.csh $f90compiler
+./install $f90compiler
 
-The main shell script (surfNelcomp.csh) is now ready to be used
+The main shell script (CompPlot) is now ready to be used
 
 RUN:
 
 cp TESTPDBS/2haq.pdb .  (EXAMPLE INPUT)
 
-./surfNelcomp.csh -inp  [PDB_filename]
-./surfNelcomp.csh -inp  [PDB_filename] target [residue_number-residue_identity]
-./surfNelcomp.csh -inp  2haq.pdb
-./surfNelcomp.csh -inp  2haq.pdb target 151-PHE
-./surfNelcomp.csh -help (for help)
+./CompPlot -inp  [PDB_filename]
+./CompPlot -inp  [PDB_filename] target [residue_number-residue_identity]
+./CompPlot -inp  2haq.pdb
+./CompPlot -inp  2haq.pdb -tar 151-PHE
+./CompPlot -help (for help)
 
 REFRESH: 
 
-./refresh.csh (Does not remove the executables stored in EXEC and the Library files in the current directory)
+./refresh (Does not remove the executables stored in EXEC and the Library files in the current directory)
 
 CLEAN: 
 
-./clean.csh (Cleans everything and returns to the RAW downloaded state of the package) 
+./clean (Cleans everything and returns to the RAW downloaded state of the package) 
 
 if cleaned, 
-./install.csh  HAS TO BE EXECUTED AGAIN prior to RUN
+./install  HAS TO BE EXECUTED AGAIN prior to RUN
 
-FOR AN INCOMPLETE OR ABNORMAL (INTERRUPTED) TERMINATION OF  ./surfNelcomp.csh  
+FOR AN INCOMPLETE OR ABNORMAL (INTERRUPTED) TERMINATION OF  ./CompPlot  
 ENSURE TO RUN  ./clean.csh  THEN  ./install.csh PRIOR TO THE NEXT RUN OF THE PROGRAM
 ALTERNATIVELY YOU CAN ALSO run ./refresh.csh in which case you do not need to reinstall the program
 ENSURE to remove files starting with specific filenames in that case (e.g., rm -f 1psr.*)
