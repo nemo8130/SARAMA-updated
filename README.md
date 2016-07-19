@@ -1,8 +1,12 @@
 # SARAMA (& SARAMAint)
 
+>
 A standalone suite of programs to plot the distribution of amino acid residues in the Complementarity Plots 
+>
 for those which are embedded at the protein interior (SARAMA)
+>
 and for those that are buried upon complexation and embedded at the Protein-Protein Interfaces (SARAMAint)
+>
 
 ## A more detailed Documentation is available here: 
 http://www.saha.ac.in/biop/www/db/local/sarama/sarama-readme.html
