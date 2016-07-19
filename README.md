@@ -7,7 +7,7 @@ for those which are embedded at the protein interior (SARAMA)
 > 
 READ more: http://www.cell.com/biophysj/abstract/S0006-3495%2812%2900503-6
 >
-for those that are buried upon complexation and embedded at the Protein-Protein Interfaces (SARAMAint)
+for those that are buried upon complexation, embedded at the Protein-Protein Interfaces (SARAMAint)
 >
 READ more: http://www.ingentaconnect.com/content/asp/jbic/2014/00000003/00000004/art00011?token=004c1abebd13fe84c9383a4b3b25702e7b757a5a6a38572066282a72752d7bdfe8b8aaf4e2f5
 >
