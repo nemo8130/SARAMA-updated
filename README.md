@@ -11,9 +11,16 @@ The same for residues buried upon complexation embedded at a Protein-Protein Int
 http://www.saha.ac.in/biop/www/db/local/sarama/sarama-readme.html
 
 Requires PERL (v.5.8 or higher), and a fortran90 compiler (prefered: ifort)
-and one additional packages to be pre-installed
+and just one additional package(s) to be pre-installed
 
-1. delphi v.6.2 (http://compbio.clemson.edu/delphi/) [executable_name: delphi95]
+1. delphi v.6.2 (http://compbio.clemson.edu/delphi/) [executable_name: delphi_static / delphi95]
+
+You can either choose to run the single (SARAMA) or multi-dielctric (SARAMA-multidielctric-delphi) version
+to appropriately set the protein internal dielectric continumm at the interior / or at the interface.
+
+Users are recomended to read additional background literature before implementing the multi-dielctric Delphi-Gaussian mode here: 
+http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3622359/
+
 
 ### Installation
 
@@ -21,9 +28,22 @@ and one additional packages to be pre-installed
 $ git clone https://github.com/nemo8130/SARAMA-updated
 $ cd SARAMA-updated
 $ cd SARAMA
+$ or
+$ cd SARAMA-multidielectric-delphi
 $ chmod +x install
 $ ./install <fortran90-compiler>  (Default: ifort)
 ```
+
+```sh
+$ git clone https://github.com/nemo8130/SARAMAint-updated
+$ cd SARAMAint-updated
+$ cd SARAMAint
+$ or
+$ cd SARAMAint-multidielectric-delphi
+$ chmod +x install
+$ ./install <fortran90-compiler>  (Default: ifort)
+```
+
 
 ## The program has just one mandetory input :
 
