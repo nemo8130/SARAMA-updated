@@ -5,7 +5,7 @@ A standalone suite of programs to plot the distribution of residues embedded at 
 # &
 # SARAMAint
 
-The same for residues buried upon complexation embedded at a Protein-Protein Interface (Linux)
+The same for residues buried upon complexation embedded at a Protein-Protein Interface 
 
 ## A more detailed Documentation is available here: 
 http://www.saha.ac.in/biop/www/db/local/sarama/sarama-readme.html
