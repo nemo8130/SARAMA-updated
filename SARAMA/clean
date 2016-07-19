@@ -72,7 +72,6 @@ ls $i > dump
 	fi
 done
 
-rm -f EXEC/*
 rm -f dump
 
 echo
