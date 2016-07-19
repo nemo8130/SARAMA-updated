@@ -7,7 +7,8 @@ A standalone suite of programs to plot the distribution of residues embedded at 
 
 The same for residues buried upon complexation embedded at a Protein-Protein Interface (Linux)
 
-## A more detailed Documentation is available here: (http://www.saha.ac.in/biop/www/db/local/sarama/sarama-readme.html)
+## A more detailed Documentation is available here: 
+http://www.saha.ac.in/biop/www/db/local/sarama/sarama-readme.html
 
 Requires PERL (v.5.8 or higher), and a fortran90 compiler (prefered: ifort)
 and one additional packages to be pre-installed
