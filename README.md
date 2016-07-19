@@ -1,22 +1,24 @@
 # SARAMA
 
-A standalone suite of programs to plot the distribution of residues embedded at a globular protein interior in the Complementarity Plots [CPs] (for Linux)
+A standalone suite of programs to plot the distribution of residues embedded at a globular protein interior in the Complementarity Plots 
 
 # &
 # SARAMAint
 
 The same for residues buried upon complexation embedded at a Protein-Protein Interface (Linux)
 
+## A more detailed Documentation is available here: (http://www.saha.ac.in/biop/www/db/local/sarama/sarama-readme.html)
+
 Requires PERL (v.5.8 or higher), and a fortran90 compiler (prefered: ifort)
-and two additional packages to be pre-installed
+and one additional packages to be pre-installed
 
 1. delphi v.6.2 (http://compbio.clemson.edu/delphi/) [executable_name: delphi95]
-3. EDTSurf (http://zhanglab.ccmb.med.umich.edu/EDTSurf/) [executable_name: EDTSurf]
 
 ### Installation
 
 ```sh
 $ git clone https://github.com/nemo8130/SARAMA-updated
+$ cd SARAMA-updated
 $ cd SARAMA
 $ chmod +x install
 $ ./install <fortran90-compiler>  (Default: ifort)
