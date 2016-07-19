@@ -86,10 +86,10 @@ $ cat OUT1psr/1psr.CS
           CS_l: 1.53895, rGb: 0.06081, Pcount:  8.333, Psm:  -0.844, Pem:  -1.288
 > 
 
-### For a detail and exhaustive list and documentation of output features: see: 
+### For a detail and exhaustive list and documentation of output features, see: 
 
-SARAMA/README.output
-SARAMAint/README.output
+#### SARAMA/README.output
+#### SARAMAint/README.output
 
 ### Reference
 
