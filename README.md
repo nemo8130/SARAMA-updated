@@ -73,6 +73,7 @@ $ reduce -build -DB ~/lib/reduce_het_dict.txt <input.pdb> | awk '$1=="ATOM" || $
 ```sh
 $ ./CompPlot -inp <inputH.PDB> 
 $ ./CompPlot -inp <inputH.pdb> -tar <45-THR>
+$ ./CPint -inp <inputH.pdb>
 ```
 where,
 - inputH.pdb: The input pdb (coordinate file in Brrokheaven format; http://www.ccp4.ac.uk/html/procheck_man/manappb.html) file
