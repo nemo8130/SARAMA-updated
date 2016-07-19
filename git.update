@@ -1,0 +1,5 @@
+git add *
+git commit -a -m "README_added"
+
+git push "https://github.com/nemo8130/SARAMA-updated"
+
