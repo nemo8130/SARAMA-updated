@@ -85,16 +85,23 @@
       Emt1 = Emt(i)
 
 !==================================================================================
-!     RESET VALUES FALLING INTO THE "LEFT BOTTOM CORNER" GRID OF THE PLOT(S)
+!     RESET VALUES FALLING INTO THE "LEFT-BOTTOM / RIGHT-BOTTOM / LEFT-TOP / RIGHT-TOP CORNER"
+!     DON'T LEAVE THEM UNDEFINED
 !==================================================================================
 
-      if (Smt1 < -0.95)then
-          Smt1 = -0.95
+      if (Smt1 > 0.95)then
+          Smt1 = 0.95
       endif
-      if (Emt1 < -0.95)then
-          Emt1 = -0.95
+      if (Emt1 > 0.95)then
+          Emt1 = 0.95
       endif
 
+      if (Smt1 > 0.95)then
+          Smt1 = 0.95
+      endif
+      if (Emt1 > 0.95)then
+          Emt1 = 0.95
+      endif
 !==================================================================================
 !==================================================================================
 
