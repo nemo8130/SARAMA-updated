@@ -104,6 +104,6 @@ close OUT;
 
 if ($tag == 0)
 {
-#print "\n\nCalling EXEC/cys2cyxs.pl for CYS -> CYX conversion\n\n";
-do 'EXEC/cys2cyxs.pl';
+#print "\n\nCalling ./EXEC/cys2cyxs.pl for CYS -> CYX conversion\n\n";
+do './EXEC/cys2cyxs.pl';
 }

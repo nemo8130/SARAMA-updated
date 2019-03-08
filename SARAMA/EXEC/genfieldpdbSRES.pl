@@ -82,7 +82,7 @@ $flagR = 0;
 			print OUT $_,"\n";
 			}
 		close OUT;
-		do 'EXEC/dum2pdbNC.pl'; # out : dumm.pdb
+		do './EXEC/dum2pdbNC.pl'; # out : dumm.pdb
 
 		`mv dumm.pdb $self_field`;	# linux
 #`move dumm.pdb $self_field`; (MS-DOS)
@@ -95,7 +95,7 @@ $flagR = 0;
 		print OUT $candres,"\n";
 		close OUT;
 
-		do 'EXEC/dum2pdbNC.pl'; # out : dumm.pdb
+		do './EXEC/dum2pdbNC.pl'; # out : dumm.pdb
 
 		`mv dumm.pdb $comp_field`;	# linux
 		# `move dumm.pdb $comp_field`; (MS-DOS)

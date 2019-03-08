@@ -18,7 +18,7 @@ print OUT $dat[$i],"\n";
 #print $dat[$i],"\n";
 close OUT;
 `rm -f sucal1.out`;
-`EXEC/satvp.exe`;
+`./EXEC/satvp.exe`;
 open (INP2,"<sucal1.out");
 @store = <INP2>;
 	foreach $k (@store)

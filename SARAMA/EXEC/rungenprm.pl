@@ -83,15 +83,15 @@ $bur = 1.00;
 	$log1 = 'sf.log';		# log out 1 (will be overwritten)
 	$log2 = 'cf.log';		# log out 2 (will be overwritten)
 #printf "%15s  %15s  %15s  %15s  %15s  %15s  %15s\n",$self_field,$comp_field,$surf_grid,$pot1,$pot2,$log1,$log2;
-	`EXEC/generateprm.pl $self_field $surf_grid $modpdb1 $pot1 $gind`;
+	`./EXEC/generateprm.pl $self_field $surf_grid $modpdb1 $pot1 $gind`;
 	`mv script.prm script1.prm`;
-	`EXEC/generateprm.pl $comp_field $surf_grid $modpdb2 $pot2 $gind`;
+	`./EXEC/generateprm.pl $comp_field $surf_grid $modpdb2 $pot2 $gind`;
 	`mv script.prm script2.prm`;
 	`delphi_static script1.prm > $log1`;
 	`delphi_static script2.prm > $log2`;
-        `EXEC/extpot.pl $pot1 > temp1.pot`;
-        `EXEC/extpot.pl $pot2 > temp2.pot`;
-        $out = `EXEC/ccpsw.exe temp1.pot temp2.pot`;
+        `./EXEC/extpot.pl $pot1 > temp1.pot`;
+        `./EXEC/extpot.pl $pot2 > temp2.pot`;
+        $out = `./EXEC/ccpsw.exe temp1.pot temp2.pot`;
 	chomp $out;
 #	chomp $out2;
 #		if ($out != $out2)
