@@ -39,7 +39,7 @@ if [ "$#" -lt "2" ]; then
 	echo "------------------------------------------------------------------------------------------------------------------------"
 	echo "Enter pdb filename to be found in the current directory or subdirectories under it: e.g., TESTPDB/1psr.pdb as arg-1"
 	echo "Enter reduce library file with path (e.g., ~/lib/reduce_het_dict.txt or reduce_scripts/lib/) as arg-2"
-	echo "Example: ./reduce_PDB TESTPDBS/1psr.pdb reduce_scripts/lib/reduce_het_dict.txt "
+	echo "Example: ./reduce_PDB TESTPDBS/1psr.pdb reduce_scripts/lib/reduce_het_dict.txt"
 	echo "------------------------------------------------------------------------------------------------------------------------"
 	echo
 	exit;
