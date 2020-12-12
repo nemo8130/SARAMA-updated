@@ -257,7 +257,7 @@ chf=`head -1 formch.out`
 	echo "                         Sankar Basu, Dhananjay Bhattacharyya, and Rahul Banerjee*"
 	echo "                    Indian Journal of Biochemistry and Biophysics, 2014, 51 (June) pp. 188-200"
 	echo "==========================================================================================================================="
-	
+	exit
         fi
 
 #exit;
