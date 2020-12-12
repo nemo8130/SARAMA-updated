@@ -34,8 +34,8 @@ if cleaned,
 ./install  HAS TO BE EXECUTED AGAIN prior to RUN
 
 FOR AN INCOMPLETE OR ABNORMAL (INTERRUPTED) TERMINATION OF  ./CompPlot  
-ENSURE TO RUN  ./clean.csh  THEN  ./install.csh PRIOR TO THE NEXT RUN OF THE PROGRAM
-ALTERNATIVELY YOU CAN ALSO run ./refresh.csh in which case you do not need to reinstall the program
+ENSURE TO RUN  ./clean  THEN  ./install PRIOR TO THE NEXT RUN OF THE PROGRAM
+ALTERNATIVELY YOU CAN ALSO run ./refresh in which case you do not need to reinstall the program
 ENSURE to remove files starting with specific filenames in that case (e.g., rm -f 1psr.*)
 
 The filename can have any number of characters but must not contain any '.' (or space ' ') 
