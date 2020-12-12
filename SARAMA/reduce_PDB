@@ -1,0 +1,75 @@
+#!/bin/bash
+
+upath=`echo ${0/reduce_PDB/}`
+path=`readlink -f $upath`
+
+echo $path
+
+reduce3=`echo reduce`
+
+tmpdir=`mktemp -d`
+
+echo $reduce3
+
+if hash $reduce3 &>/dev/null; then
+echo "$reduce3 FOUND"
+        echo '==========================================================================================================='
+        echo 'REDUCE (v.3 & any sub-versions) is running under the command : reduce'
+        echo 'Script will run'
+        echo '==========================================================================================================='
+        echo
+else
+echo
+        echo '==========================================================================================================='
+        echo 'reduce is NOT running under the command : reduce'
+	echo "Get reduce from here: https://github.com/rlabduke/reduce/"
+	echo "Store the library file: reduce_het_dict.txt at reduce_scripts/lib/reduce_het_dict.txt or a personalized folder"
+	echo "Make sure to input this library file with its path as arg-2"
+        echo 'Script will exit'
+        exit
+        echo '==========================================================================================================='
+        echo
+fi
+
+pdb=$1
+reducelib=$2
+
+if [ "$#" -lt "2" ]; then
+	echo
+	echo "------------------------------------------------------------------------------------------------------------------------"
+	echo "Enter pdb filename to be found in the current directory or subdirectories under it: e.g., TESTPDB/1psr.pdb as arg-1"
+	echo "Enter reduce library file with path (e.g., ~/lib/reduce_het_dict.txt or reduce_scripts/lib/) as arg-2"
+	echo "Example: ./reduce_PDB TESTPDBS/1psr.pdb reduce_scripts/lib/reduce_het_dict.txt "
+	echo "------------------------------------------------------------------------------------------------------------------------"
+	echo
+	exit;
+fi       
+
+basename=`echo ${pdb/.pdb/}`
+
+$path/reduce_scripts/trimH.pl $pdb > temp0
+
+if [ -e "$reducelib" ]; then 
+	reduce -build temp0 -DB $reducelib | awk '$1=="ATOM"' > temp1 
+else
+	echo
+	echo "------------------------------------------------------------------------------------------------------------------------"
+	echo "${reducelib} not found at the specified path"
+	echo "------------------------------------------------------------------------------------------------------------------------"
+	echo
+	exit
+fi
+$path/reduce_scripts/convH_reduce3.pl temp1 > temp2
+$path/reduce_scripts/delcol13.pl temp2 > ${basename}_reduced.pdb
+
+echo
+echo
+echo "------------------------------------------------------"
+echo "OUTFILE: ${basename}_reduced.pdb"
+echo "Rename appropriately (as you wish) before using for CompPlot"
+echo "------------------------------------------------------"
+echo
+echo
+
+
+
