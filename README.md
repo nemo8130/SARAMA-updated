@@ -1,23 +1,14 @@
-# SARAMA (& SARAMAint)
+# SARAMA
 
->
-A standalone suite of programs to plot the distribution of amino acid residues in the Complementarity Plots 
->
-For those that are embedded at the protein interior (**SARAMA**)
+A standalone suite of programs to estimate the quality of folded globular proteins globally as well as locally. 
+SARAMAint plots the distribution of buried amino acid residues at the globular protein interiors in the Complementarity Plots (CP) coupled with the analysis of hydrophobic burial profiles of the same. 
+
+
+### Please be redirected to access the following CP versions from the below links:
+> **SARAMAint** (Complementarity Plot for globular proteins): https://github.com/nemo8130/SARAMAint-updated
 > 
-### Read More 
->
-[Ref.1] (http://www.cell.com/biophysj/abstract/S0006-3495%2812%2900503-6)
-> 
-[Ref.2] (http://www.ingentaconnect.com/content/asp/jbic/2013/00000002/00000004/art00010?token=004a1bfb806852e17fe41333c4a2f7a3f38763b476773487467244f6d4e222485b6de43416)
-> 
-[Ref.3] (http://nopr.niscair.res.in/handle/123456789/29083)
->
-For those that are buried upon complexation, embedded at the Protein-Protein Interfaces (**SARAMAint**)
->
-> 
-[Ref.4] (http://www.ingentaconnect.com/content/asp/jbic/2014/00000003/00000004/art00011?token=004c1abebd13fe84c9383a4b3b25702e7b757a5a6a38572066282a72752d7bdfe8b8aaf4e2f5)
->
+> **CPdock** (Complementarity Plot for protein-protein docking): https://github.com/nemo8130/CPdock
+
 
 ## A more detailed Documentation is available here: 
 http://www.saha.ac.in/biop/www/db/local/sarama/sarama-readme.html
