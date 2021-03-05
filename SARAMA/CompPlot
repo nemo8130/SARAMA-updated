@@ -1033,6 +1033,7 @@ echo ' '
 cp README.output $outdir/
 mv $pdb $outdir/
 mv $code.res $outdir/
+mv ${code}_CP.pml $outdir/
 mv $code.mcores $outdir/
 mv $code.bury $outdir/
 mv $code-surf.pdb $outdir/
