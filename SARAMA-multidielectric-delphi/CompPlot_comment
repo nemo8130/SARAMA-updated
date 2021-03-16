@@ -139,6 +139,11 @@ fi
 
 	if [ "$flag" == "start" ] && [ "$1" == "-inp" ]; then
 	pdb=$2
+        check_blank=`wc -l $pdb | cut -f1 -d' '`
+                if [ "$check_blank" -eq "0" ]; then
+                        echo "INPUT PDB FILE IS A BLANK FILE"
+                        exit
+                fi
 	echo
 	echo 'Filename you entered:' $pdb
 	rm -f chfn.inp
@@ -258,7 +263,7 @@ chf=`head -1 formch.out`
 	echo "                         Sankar Basu, Dhananjay Bhattacharyya, and Rahul Banerjee*"
 	echo "                    Indian Journal of Biochemistry and Biophysics, 2014, 51 (June) pp. 188-200"
 	echo "==========================================================================================================================="
-	exit
+	
         fi
 
 #exit;
@@ -471,13 +476,15 @@ echo
 $path/EXEC/buryasa.exe inp.asa
 $path/EXEC/remapbury.pl $code.res > $code.bury 	# bury.out -> $code.bury
 
+
 hydbur=`$path/EXEC/rGb.exe $code.bury`
 
 #echo "after hydbur:" 
 #ls $pdb
 
 
-#echo $hydbur
+echo $hydbur
+
 
 echo    
 echo '================================================================='
@@ -501,8 +508,8 @@ chbgs=`$path/EXEC/chburSRES.pl $code.bury`
 	errorlog=LOG_`echo $code`
 	rm -rf $errorlog/
 	mkdir $errorlog/
-	mv $code.pdb $errorlog/
-	mv $code.bury $errorlog/
+#	mv $code.pdb $errorlog/
+#	mv $code.bury $errorlog/
 	echo
 	clean=1
 	echo '================================================================='
@@ -574,6 +581,7 @@ $path/EXEC/pdb2resWM.pl $pdb
 
 $path/EXEC/remapSm.pl $code.res > $code.Sm               # out.satv -> $code.Sm
 
+
 #echo "after remapSm:" 
 #ls $pdb
 
@@ -616,6 +624,8 @@ echo '   '
 
 #ls $pdb
 #ls $code.bury
+
+
 
 $path/EXEC/glbN.exe $pdb $code.bury			# INDEX OF GLOBULARITY / ASSYMETRY
 mv fort.3 $code.glbl
@@ -817,6 +827,47 @@ rm -f fort.513
 rm -f fort.514
 rm -f fort.515
 
+if [ "$sresflag" == "0" ]; then
+outdir=OUT`echo $code`
+elif [ "$sresflag" == "1" ]; then
+outdir=OUT`echo $code-$residen`
+fi
+
+echo 'Creating OUTPUT Directory : ' $outdir/
+echo 'Find all relevant outfiles along with the input pdb stored in ' $outdir/
+rm -rf $outdir			# if pre-existing
+mkdir $outdir
+
+	if [ "$fcb2" == "0" ] && [ "$fpb2" == "0" ] && [ "$fpe2" == "0" ]; then
+	echo '=========================================================================='
+	echo
+	echo 'ALL RESIDUES ARE SOLVENT EXPOSED (burial > 0.30) IN THE INPUT PDB:' $pdb
+	echo 'Only the Accessibility score will be calculated'
+	echo 'rGb = ' $hydbur
+	echo "CS_l: N/A", "rGb:" $hydbur, "Pcount: N/A" > $code.CS
+	echo
+	echo '=========================================================================='
+#	goto refresh
+	fi
+	
+if [ "$sresflag" == "1" ]; then
+	if [ "$chbgs" == "EXPOSEDorGLYCINE" ]; then
+		echo "The single residue input is either exposed or glycine. Skipping CP-plotting"
+		echo "Sm, Em outputs generated and stored in the output directory: " $outdir
+                cp README.output $outdir/
+                mv $pdb $outdir/
+                mv $code.res $outdir/
+                mv ${code}_CP.pml $outdir/
+                mv $code.mcores $outdir/
+                mv $code.bury $outdir/
+                mv $code-surf.pdb $outdir/
+                mv $code.Sm $outdir/
+                mv $code.Em $outdir/
+                mv $code-rasint.spt $outdir/
+		exit
+	fi
+fi
+
 $path/EXEC/bdist.exe $code.Sm $code.Em
 cmp1=fort.512
 
@@ -906,31 +957,6 @@ rm -f remove.out
 rm -f sg.out
 rm -f sucal1.out
 
-if [ "$sresflag" == "0" ]; then
-outdir=OUT`echo $code`
-elif [ "$sresflag" == "1" ]; then
-outdir=OUT`echo $code-$residen`
-fi
-
-echo 'Creating OUTPUT Directory : ' $outdir/
-echo 'Find all relevant outfiles along with the input pdb stored in ' $outdir/
-rm -rf $outdir			# if pre-existing
-mkdir $outdir
-
-	if [ "$fcb2" == "0" ] && [ "$fpb2" == "0" ] && [ "$fpe2" == "0" ]; then
-	echo '=========================================================================='
-	echo
-	echo 'ALL RESIDUES ARE SOLVENT EXPOSED (burial > 0.30) IN THE INPUT PDB:' $pdb
-	echo 'Only the Accessibility score will be calculated'
-	echo 'rGb = ' $hydbur
-	echo "CS_l: N/A", "rGb:" $hydbur, "Pcount: N/A" > $code.CS
-	echo
-	echo '=========================================================================='
-#	goto refresh
-	fi
-	
-
-
 echo "OUTPUTS"
 echo "======="
 
@@ -988,6 +1014,11 @@ echo ' '
 #	gv $code-pe.ps
 	fi
 
+#============================================ ADD PYMOL DISPLAY MODULE ==================================
+	$path/EXEC/drawpml_CP.pl $code
+#	pymol ${code}_CP.pml
+#========================================================================================================
+
 	cat $code-comp.* > $code.cnt
 	count=`$path/EXEC/fracimp.pl $code.cnt`
 
@@ -1033,6 +1064,7 @@ echo ' '
 cp README.output $outdir/
 mv $pdb $outdir/
 mv $code.res $outdir/
+mv ${code}_CP.pml $outdir/
 mv $code.mcores $outdir/
 mv $code.bury $outdir/
 mv $code-surf.pdb $outdir/
