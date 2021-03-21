@@ -1,6 +1,6 @@
 #!/bin/bash
 
-upath=`echo ${0/CompPlot/}`
+upath=`echo ${0/CompPlot_comment/}`
 path=`readlink -f $upath`
 
 echo $path
@@ -139,11 +139,11 @@ fi
 
 	if [ "$flag" == "start" ] && [ "$1" == "-inp" ]; then
 	pdb=$2
-	check_blank=`wc -l $pdb | cut -f1 -d' '`
-		if [ "$check_blank" -eq "0" ]; then
-			echo "INPUT PDB FILE IS A BLANK FILE"
-			exit
-		fi
+        check_blank=`wc -l $pdb | cut -f1 -d' '`
+                if [ "$check_blank" -eq "0" ]; then
+                        echo "INPUT PDB FILE IS A BLANK FILE"
+                        exit
+                fi
 	echo
 	echo 'Filename you entered:' $pdb
 	rm -f chfn.inp
@@ -208,8 +208,14 @@ code=`echo $pdb | cut -f1 -d"."`
 rm -f formp.pdb
 rm -f fch.log
 rm -f fpp.status
-errorlog=LOG_`echo $code`
-rm -rf $errorlog/
+
+if [ "$sresflag" == "1" ]; then 
+	errorlog=LOG_${code}_$residen
+else
+	errorlog=LOG_${code}
+fi
+
+rm -rf $errorlog/ >& /dev/null
 
 #ls $pdb
 
@@ -229,6 +235,8 @@ mv temp.pdb $pdb
 $path/EXEC/formcheck.pl $pdb > fch.log
 chf=`head -1 formch.out`
 #echo "chf="$chf
+
+echo $sresflag
 
         if [ "$chf" == "stop" ]; then 
         echo ""
@@ -263,10 +271,10 @@ chf=`head -1 formch.out`
 	echo "                         Sankar Basu, Dhananjay Bhattacharyya, and Rahul Banerjee*"
 	echo "                    Indian Journal of Biochemistry and Biophysics, 2014, 51 (June) pp. 188-200"
 	echo "==========================================================================================================================="
-	
+	exit
         fi
 
-#exit;
+#exit
 
 #=======================================================================
 #=============== Extract atoms, remove headerlines if any ==============
@@ -371,8 +379,6 @@ redn=`cat redun.out`
 	if [ "$redn" == "redundant" ]; then
 	echo "=================================================="
 	echo 'redundant residue identities for same position(s)'
-	errorlog=LOG_`echo $code`
-	rm -rf $errorlog
 	mkdir $errorlog
 	cat rdn.log
 	mv rdn.log $errorlog/
@@ -398,7 +404,7 @@ nm=`wc met.cores | cut -f1 -d' '`
 	fi
 
 #echo I am here before Sm
-#exit;
+#exit
 
 #=======================================================================
 #=======================================================================
@@ -423,39 +429,31 @@ $path/EXEC/pdb2res.pl inp.pdb			# map-out: inp.res
 	residen=`echo ${residen/ /}`
 	checksingres=`cat $code.res | grep $residen`
 	checksingres=`echo ${checksingres/ /}`
-
+	echo $residen
+	
 		if [ "$checksingres" == "$residen" ]; then
 		echo '============================================'
 		echo '============================================'
-		echo $residen 'found in the input pdb'
+		echo "${residen} found in the input pdb"
 		echo 'proceeding'
 		echo '============================================'
 		echo '============================================'	
 		else
 		echo '=================================================================================='
 		echo '=================================================================================='
-		echo $residen "NOT found in the input pdb"
+		echo "${residen} NOT found in the input pdb"
 		echo 'Therefore exiting'
-		errorlog=LOG_`echo $code`
-		rm -rf $errorlog/
 		mkdir $errorlog/
 		mv $code.pdb $errorlog/
 		mv $code.res $errorlog/
-		echo 'Check the presence of the target residue in' $code.res 'stored at ' $errorlog
+		echo "${residen} NOT found in the input pdb" > $errorlog/fch.log
+		echo 'Check the presence (or absence) of the target residue in' $code.res 'stored at ' $errorlog
 		echo '=================================================================================='
 		echo '=================================================================================='
 		clean=1
+		exit
 		fi
 	fi
-
-#	echo ==$checksingres==
-#	echo ==$residen==
-
-
-#exit;
-
-#=================================================================
-
 
 #==========================================================================
 # SOLVENT ACCESSIBILITY (Lee & Richards)
@@ -501,23 +499,15 @@ chbgs=`$path/EXEC/chburSRES.pl $code.bury`
 	if [ "$chbgs" == "EXPOSEDorGLYCINE" ]; then
 	echo
 	echo '================================================================='
-	echo
 	echo 'THE SINGLE RESIDUE ('$residen') YOU ENTERED IS EITHER SOLVENT EXPOSED (bur > 0.30) OR GLYCINE'
-	echo 'Therefore exiting'
-	echo 'CHECK BURIAL PROFILE OF YOUR INPUT PDB:' $code.bury 'in the directory' $errorlog 
-	errorlog=LOG_`echo $code`
-	rm -rf $errorlog/
-	mkdir $errorlog/
-#	mv $code.pdb $errorlog/
-#	mv $code.bury $errorlog/
-	echo
-	clean=1
+	echo 'CP plotting would be skipped'
 	echo '================================================================='
+	clean=1
 	echo
 	fi
 fi
 
-#exit;
+#exit
 
 
 #==================== output : bury.out goes to Em calculation =========
@@ -622,10 +612,8 @@ echo 'TEMP directory' $dir 'created'
 echo '==================================================================='
 echo '   '
 
-#ls $pdb
-#ls $code.bury
-
-
+ls $pdb
+ls $code.bury
 
 $path/EXEC/glbN.exe $pdb $code.bury			# INDEX OF GLOBULARITY / ASSYMETRY
 mv fort.3 $code.glbl
@@ -852,18 +840,26 @@ mkdir $outdir
 	
 if [ "$sresflag" == "1" ]; then
 	if [ "$chbgs" == "EXPOSEDorGLYCINE" ]; then
+		echo '=========================================================================='
 		echo "The single residue input is either exposed or glycine. Skipping CP-plotting"
-		cp README.output $outdir/
-		mv $pdb $outdir/
-		mv $code.res $outdir/
-		mv ${code}_CP.pml $outdir/
-		mv $code.mcores $outdir/
-		mv $code.bury $outdir/
-		mv $code-surf.pdb $outdir/
-		mv $code.Sm $outdir/
-		mv $code.Em $outdir/
-		mv $code-rasint.spt $outdir/
 		echo "Sm, Em outputs generated and stored in the output directory: " $outdir
+		echo '=========================================================================='
+                cp README.output $outdir/
+                mv $pdb $outdir/
+                mv $code.res $outdir/
+                mv ${code}_CP.pml $outdir/ >& /dev/null
+                mv $code.mcores $outdir/ >& /dev/null
+                mv $code.bury $outdir/
+                mv $code-surf.pdb $outdir/
+                mv $code.Sm $outdir/
+                mv $code.Em $outdir/
+                mv $code-rasint.spt $outdir/ >& /dev/null
+		echo "EXPOSEDorGLYCINE" > $outdir/remark.check
+		./clean_exposed
+		rm -f $code*.glbl
+		rm -f $code*.dsl
+		rm -f ${code}-m.pdb
+		rm -f ${code}-m.res
 		exit
 	fi
 fi
@@ -1062,26 +1058,26 @@ echo ' '
 #refresh:
 
 cp README.output $outdir/
-mv $pdb $outdir/
-mv $code.res $outdir/
-mv ${code}_CP.pml $outdir/
-mv $code.mcores $outdir/
-mv $code.bury $outdir/
-mv $code-surf.pdb $outdir/
-mv $code.Sm $outdir/
-mv $code.Em $outdir/
-mv $code-comp.cb $outdir/
-mv $code-comp.pb $outdir/
-mv $code-comp.pe $outdir/
-mv $code.CSplot $outdir/
-mv $code-cb.ps $outdir/
-mv $code-pb.ps $outdir/
-mv $code-pe.ps $outdir/
-mv $code.CS $outdir/
-mv $code.pack $outdir/
-mv $code.elect $outdir/
-mv $code.cnt $outdir/
-mv $code-rasint.spt $outdir/
+mv $pdb $outdir/ >& /dev/null
+mv $code.res $outdir/ >& /dev/null
+mv ${code}_CP.pml $outdir/ >& /dev/null
+mv $code.mcores $outdir/ >& /dev/null
+mv $code.bury $outdir/ >& /dev/null
+mv $code-surf.pdb $outdir/ >& /dev/null
+mv $code.Sm $outdir/ >& /dev/null
+mv $code.Em $outdir/ >& /dev/null
+mv $code-comp.cb $outdir/ >& /dev/null
+mv $code-comp.pb $outdir/ >& /dev/null
+mv $code-comp.pe $outdir/ >& /dev/null
+mv $code.CSplot $outdir/ >& /dev/null
+mv $code-cb.ps $outdir/ >& /dev/null
+mv $code-pb.ps $outdir/ >& /dev/null
+mv $code-pe.ps $outdir/ >& /dev/null
+mv $code.CS $outdir/ >& /dev/null
+mv $code.pack $outdir/ >& /dev/null
+mv $code.elect $outdir/ >& /dev/null
+mv $code.cnt $outdir/ >& /dev/null
+mv $code-rasint.spt $outdir/ >& /dev/null
 
 #=================================
 # REFRESH
